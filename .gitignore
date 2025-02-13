@@ -1,0 +1,64 @@
+# --- General ---
+.DS_Store
+Thumbs.db
+.env
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.venv/
+
+# --- IDEs & Editors ---
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# --- Logs & Temporary Files ---
+*.log
+*.tmp
+*.swp
+*.bak
+
+# --- Jupyter Notebooks ---
+.ipynb_checkpoints
+
+# --- Node / React ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+build/
+
+# --- Rust ---
+/target/
+Cargo.lock
+
+# --- Environment Variables & Secrets ---
+.env
+
+# --- Docker ---
+# (Uncomment if you want to ignore Dockerfiles or docker-compose files)
+# Dockerfile*
+# docker-compose.yml
+
+# --- Testing & Coverage ---
+.coverage
+htmlcov/
+.tox/
+.nox/
+*.cover
+*.py,cover

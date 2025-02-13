@@ -3,7 +3,7 @@
 
 **MediDiagAi** is an AI-powered diagnostic assistant designed for use in modern healthcare environments across the globe. It operates in two primary modes:
 
-![MediDiagAi Logo](./images/nyx.webp)
+![MediDiagAi Logo](./branding/nyx.webp)
 
 1. **Patient Chatbot Mode:**  
    - **Interactive Chatbot:** Engage with patients via a conversational interface that accepts both text and voice input.
