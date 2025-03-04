@@ -46,7 +46,7 @@ def query_deepseek_r1(message: str) -> str:
         "model": "deepseek-r1-distill-llama-70b",
         "messages": create_enhanced_prompt(message),
         "temperature": 0.7,  # Balanced between creativity and accuracy
-        "max_tokens": 1000,  # Increased for longer responses
+        "max_tokens": 9000,  # Increased for longer responses
         "top_p": 0.95,      # Allow for more diverse responses
         "presence_penalty": 0.6,  # Encourage covering new topics
         "frequency_penalty": 0.3   # Reduce repetition

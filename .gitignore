@@ -62,3 +62,5 @@ htmlcov/
 .nox/
 *.cover
 *.py,cover
+# ignore the setup.shs file 
+setup.ps1
