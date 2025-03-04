@@ -3,6 +3,7 @@ import { Header } from './components/Layout/Header';
 import { MessageBubble } from './components/Chat/MessageBubble';
 import './styles/globals.css';
 import { Message } from './types/chat';
+import { sendMessage } from './services/api';
 
 const App = () => {
   const [messages, setMessages] = useState<Message[]>([
@@ -15,9 +16,10 @@ const App = () => {
   ]);
   
   const [inputText, setInputText] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   
-  const handleSendMessage = () => {
-    if (inputText.trim() === '') return;
+  const handleSendMessage = async () => {
+    if (inputText.trim() === '' || isLoading) return;
     
     // Add user message
     const userMessage: Message = {
@@ -29,18 +31,35 @@ const App = () => {
     
     setMessages(prev => [...prev, userMessage]);
     setInputText('');
+    setIsLoading(true);
     
-    // Simulate AI response (replace with actual API call later)
-    setTimeout(() => {
+    try {
+      // Call the actual API instead of setTimeout
+      const response = await sendMessage(inputText);
+      
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
-        content: 'I need more information about your symptoms to provide an assessment. Could you describe what you\'re experiencing?',
+        content: response,
         role: 'assistant',
         timestamp: new Date().toISOString()
       };
       
       setMessages(prev => [...prev, aiResponse]);
-    }, 1000);
+    } catch (error) {
+      console.error('Error getting response:', error);
+      
+      // Add error message
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        content: 'Sorry, I encountered an error processing your request. Please try again.',
+        role: 'assistant',
+        timestamp: new Date().toISOString()
+      };
+      
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -52,6 +71,11 @@ const App = () => {
           {messages.map(message => (
             <MessageBubble key={message.id} message={message} />
           ))}
+          {isLoading && (
+            <div className="self-end bg-gray-200 text-gray-600 p-3 rounded-lg">
+              <span className="animate-pulse">AI is thinking...</span>
+            </div>
+          )}
         </div>
         
         <div className="flex gap-2">
@@ -62,10 +86,12 @@ const App = () => {
             onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
             placeholder="Describe your symptoms..."
             className="flex-1 p-2 border border-gray-300 rounded"
+            disabled={isLoading}
           />
           <button 
             onClick={handleSendMessage}
             className="bg-primary text-white px-4 py-2 rounded"
+            disabled={isLoading}
           >
             Send
           </button>

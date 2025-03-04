@@ -1,7 +1,7 @@
 // src/hooks/useChat.ts
 import { useState, useCallback } from 'react';
 import { Message } from '../types/chat';
-import { chatService } from '../services/api';
+import { sendMessage } from '../services/api';
 import { v4 as uuidv4 } from 'uuid';
 
 export const useChat = () => {
@@ -9,7 +9,7 @@ export const useChat = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const sendMessage = useCallback(async (content: string) => {
+  const sendMessageHandler = useCallback(async (content: string) => {
     try {
       setIsLoading(true);
       setError(null);
@@ -24,7 +24,7 @@ export const useChat = () => {
       setMessages(prev => [...prev, userMessage]);
 
       // Get AI response
-      const response = await chatService.sendMessage(content);
+      const response = await sendMessage(content);
       
       // Add AI message
       const aiMessage: Message = {
@@ -42,5 +42,5 @@ export const useChat = () => {
     }
   }, []);
 
-  return { messages, isLoading, error, sendMessage };
+  return { messages, isLoading, error, sendMessage: sendMessageHandler };
 };
